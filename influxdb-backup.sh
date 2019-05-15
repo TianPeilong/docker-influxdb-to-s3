@@ -6,13 +6,10 @@ set -e
 : ${DATABASE:?"DATABASE env variable is required"}
 export BACKUP_PATH=${BACKUP_PATH:-/data/influxdb/backup}
 export BACKUP_RESERVED_DAY=${BACKUP_RESERVED_DAY:-3}
-export RESTORE_FILE_NAME=${BACKUP_RESERVED_DAY:-influxdb_backup} # without .tgz
+export RESTORE_FILE_NAME=${BACKUP_RESERVED_DAY:-influxdb_backup_${DATABASE}} # without .tgz
 export RESTORE_DATABASE=${RESTORE_DATABASE:-${DATABASE}-restore} # without .tgz
 export DATABASE_HOST=${DATABASE_HOST:-localhost}
 export DATABASE_PORT=${DATABASE_PORT:-8088}
-export DATABASE_META_DIR=${DATABASE_META_DIR:-/var/lib/influxdb/meta}
-export DATABASE_DATA_DIR=${DATABASE_DATA_DIR:-/var/lib/influxdb/data}
-export DATETIME=$(date "+%Y%m%d%H%M%S")
 
 # Add this script to the crontab and start crond
 cron() {

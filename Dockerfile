@@ -6,5 +6,7 @@ RUN apk add --no-cache bash py-pip && rm -rf /var/cache/apk/*
 
 COPY influxdb-backup.sh /usr/bin/influxdb-backup
 
+RUN chmod -R 777 /usr/bin/influxdb-backup
+
 ENTRYPOINT ["/usr/bin/influxdb-backup"]
 CMD ["backup"]

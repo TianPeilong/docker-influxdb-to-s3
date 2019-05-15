@@ -85,10 +85,12 @@ docker run \
 
 ```shell
 docker run \
-    -e DATABASE=mydatabase \
+    -v /opt/temp:/backup \
+    -e DATABASE=mydb \
+    -e BACKUP_PATH=/backup \
     -e BACKUP_RESERVED_DAY=3 \
-    -e DATABASE_HOST=1.2.3.4 \
-    jacobtomlinson/influxdb-to-s3:latest \
+    -e DATABASE_HOST=0.0.0.0 \
+    my/influxdb-backup:latest \
     backup
 ```
 
@@ -96,10 +98,12 @@ docker run \
 
 ```shell
 docker run \
-    -v /path/to/influxdb:/var/lib/influxdb \
-    -e DATABASE=mydatabase \
-    -e RESTORE_FILE_NAME=influxdb_backup_mydatabase_20130406 \
-    -e RESTORE_DATABASE=mydatabase-restore
-    jacobtomlinson/influxdb-to-s3:latest \
+    -v /opt/temp:/backup \
+    -e DATABASE=mydb \
+    -e BACKUP_PATH=/backup \
+    -e RESTORE_FILE_NAME=influxdb_backup_mydb_20190515 \
+    -e RESTORE_DATABASE=mydb-restore \
+    -e DATABASE_HOST=0.0.0.0 \
+    my/influxdb-backup:latest \
     restore
 ```
