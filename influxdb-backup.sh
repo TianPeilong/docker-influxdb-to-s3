@@ -29,7 +29,7 @@ backup() {
   if [ ! -d $BACKUP_PATH ]; then
     mkdir -p $BACKUP_PATH
   fi
-  prefix="influxdb_backup_"
+  prefix=influxdb_backup_${DATABASE}_
   # count exist
   cd $BACKUP_PATH
   count=`find -mindepth 1 -maxdepth 1 -type f -name ${prefix}* | wc -w`
