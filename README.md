@@ -2,7 +2,7 @@
 
 This container periodically runs a backup of an InfluxDB database to an S3 bucket. It also has the ability to restore.
 
-## Usage
+## Usage(influxdb-to-s3.sh)
 
 ### Default cron (1am daily)
 
@@ -77,3 +77,29 @@ docker run \
 | `DATABASE_DATA_DIR` | Path to local influxdb data dir  | `/path/to/influxdb/data` | `/var/lib/influxdb/data`   | Yes |
 | `BACKUP_PATH` | Directory to write the backup (within the container)  | `/myvolume/mybackup` | `/data/influxdb/backup`   | Yes |
 | `BACKUP_ARCHIVE_PATH` | Path to compress the backup (within the container)  | `/myvolume/mybackup.tgz` | `${BACKUP_PATH}.tgz`   | Yes |
+
+
+## Usage(influxdb-backup.sh)
+
+### Run backup
+
+```shell
+docker run \
+    -e DATABASE=mydatabase \
+    -e BACKUP_RESERVED_DAY=3 \
+    -e DATABASE_HOST=1.2.3.4 \
+    jacobtomlinson/influxdb-to-s3:latest \
+    backup
+```
+
+### Restore
+
+```shell
+docker run \
+    -v /path/to/influxdb:/var/lib/influxdb \
+    -e DATABASE=mydatabase \
+    -e RESTORE_FILE_NAME=influxdb_backup_mydatabase_20130406 \
+    -e RESTORE_DATABASE=mydatabase-restore
+    jacobtomlinson/influxdb-to-s3:latest \
+    restore
+```
